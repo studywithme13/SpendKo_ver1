@@ -17,8 +17,8 @@ let othersSpent   = {};
 function rebuildOthersSpent() { othersSpent = {}; }
 
 let budgets = {
-  Food: 5000, Transport: 2000, Shopping: 3000,
-  Bills: 2000, Health: 1500, Entertainment: 1500, Education: 2000
+  Food: 0, Transport: 0, Shopping: 0,
+  Bills: 0, Health: 0, Entertainment: 0, Education: 0
 };
 
 /* ── INCOME: only Salary, Freelance, Other (income source) ── */
