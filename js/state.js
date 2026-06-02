@@ -109,25 +109,8 @@ function catBudgetRemaining(cat) {
 }
 
 function seedData() {
-  const now = new Date(), m = now.getMonth(), y = now.getFullYear();
-  const mm = String(m+1).padStart(2,'0');
-  transactions = [
-    { id:1, desc:'Monthly salary',    amount:38000, type:'income',  cat:'Salary',       date:`${y}-${mm}-01` },
-    { id:2, desc:'Grocery shopping',  amount:2800,  type:'expense', cat:'Food',          date:`${y}-${mm}-03` },
-    { id:3, desc:'Electric bill',     amount:1500,  type:'expense', cat:'Bills',         date:`${y}-${mm}-05` },
-    { id:4, desc:'Freelance project', amount:8500,  type:'income',  cat:'Freelance',     date:`${y}-${mm}-08` },
-    { id:5, desc:'Grab ride',         amount:280,   type:'expense', cat:'Transport',     date:`${y}-${mm}-09` },
-    { id:6, desc:'Netflix',           amount:459,   type:'expense', cat:'Entertainment', date:`${y}-${mm}-10` },
-    { id:7, desc:'Tuition fee',       amount:12000, type:'expense', cat:'Education',     date:`${y}-${mm}-12` },
-    { id:8, desc:'Medicine',          amount:850,   type:'expense', cat:'Health',        date:`${y}-${mm}-14` },
-  ];
-  goals = [
-    { id:10, name:'Emergency Fund', emoji:'💊', target:50000, saved:18000 },
-    { id:11, name:'Laptop',         emoji:'📱', target:45000, saved:12000 },
-  ];
-  debts = [
-    { id:20, name:'SSS Salary Loan',   type:'SSS / Pag-IBIG Loan', total:20000, paid:8000,  interest:10, monthly:1500, start:`${y}-01-01`, endDate:`${y}-12-31`, due:15, notes:'Auto-deducted from payroll', payments:[] },
-    { id:21, name:'Credit Card — BPI', type:'Credit Card',          total:25000, paid:5000,  interest:24, monthly:2000, start:`${y}-01-01`, endDate:`${y}-12-31`, due:20, notes:'Min payment: ₱1,500',        payments:[] },
-  ];
-  notes = [];
+  transactions = [];
+  goals        = [];
+  debts        = [];
+  notes        = [];
 }
