@@ -1,0 +1,191 @@
+/* ============================================================
+   pages.css
+   Styles for: Budget, Savings, Debt Manager, Analytics,
+               Others (Spending Lists), and Feedback.
+   ============================================================ */
+
+/* ══════════════════════════════════════
+   BUDGET PLANNER
+   ══════════════════════════════════════ */
+.budget-setup-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-bottom:24px}
+.budget-setup-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.bsc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.bsc-title{font-size:15px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
+.limit-row{display:flex;align-items:center;gap:8px}
+.limit-input{max-width:100px;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-size:15px;font-weight:500}
+.limit-input:focus{border-color:var(--accent)}
+.btn-set{padding:9px 14px;background:var(--accent);color:#1A1300;border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:background var(--transition);flex-shrink:0}
+.btn-set:hover{background:var(--accent2)}
+.bsc-progress{margin-top:14px}
+.bsc-stat{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:6px}
+.bsc-bar-bg{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.bsc-bar-fill{height:100%;border-radius:4px;transition:width 0.8s}
+
+/* ══════════════════════════════════════
+   SAVINGS GOALS
+   ══════════════════════════════════════ */
+.goals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.goal-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:transform var(--transition)}
+.goal-card:hover{transform:translateY(-2px)}
+.goal-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.goal-emoji{font-size:28px}
+.goal-info .goal-name{font-size:15px;font-weight:600;color:var(--text)}
+.goal-info .goal-meta{font-size:12px;color:var(--text3)}
+.goal-progress-circle{position:relative;width:80px;height:80px;flex-shrink:0;margin-left:auto}
+.goal-progress-circle .pct-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--text)}
+.goal-amounts{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:10px}
+.goal-bar-bg{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.goal-bar-fill{height:100%;background:var(--accent2);border-radius:3px;transition:width 0.8s}
+.goal-add-btn{padding:8px 14px;background:var(--accent3);color:var(--accent);border-radius:var(--radius-sm);font-size:13px;font-weight:500;margin-top:14px;transition:all var(--transition)}
+.goal-add-btn:hover{background:var(--accent);color:#1A1300}
+.add-goal-card{
+  background:var(--bg3);border:2px dashed var(--border2);
+  border-radius:var(--radius);padding:32px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all var(--transition);min-height:200px;
+}
+.add-goal-card:hover{border-color:var(--accent);background:var(--accent3)}
+.add-goal-card .plus{font-size:32px;color:var(--text3);margin-bottom:8px;transition:color var(--transition)}
+.add-goal-card:hover .plus{color:var(--accent)}
+.add-goal-card span{font-size:14px;color:var(--text3);font-weight:500;transition:color var(--transition)}
+.add-goal-card:hover span{color:var(--accent)}
+
+/* ══════════════════════════════════════
+   DEBT MANAGER
+   ══════════════════════════════════════ */
+.debt-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.debt-sum-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+.debt-sum-card .sc-amount{font-size:24px}
+.debt-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:24px}
+.debt-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:transform var(--transition)}
+.debt-card:hover{transform:translateY(-2px)}
+.debt-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.debt-card-title{font-size:16px;font-weight:600;color:var(--text)}
+.debt-card-type{font-size:12px;color:var(--text3);margin-top:2px}
+.debt-amount-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.debt-remaining{font-size:22px;font-weight:300;color:var(--danger);font-variant-numeric:tabular-nums}
+.debt-original{font-size:13px;color:var(--text3)}
+.debt-bar-bg{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:14px}
+.debt-bar-fill{height:100%;background:linear-gradient(90deg,#E6A800,#FFD740);border-radius:4px;transition:width 0.8s}
+.debt-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.debt-meta-item{background:var(--bg3);border-radius:var(--radius-sm);padding:8px 10px}
+.debt-meta-label{font-size:11px;color:var(--text3);margin-bottom:2px}
+.debt-meta-value{font-size:13px;font-weight:600;color:var(--text)}
+.debt-actions{display:flex;gap:8px}
+.btn-pay{flex:1;padding:9px;background:var(--accent);color:#1A1300;border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:all var(--transition)}
+.btn-pay:hover{background:var(--accent2)}
+.btn-debt-del{padding:9px 12px;background:var(--danger2);color:var(--danger);border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:all var(--transition)}
+.btn-debt-del:hover{background:var(--danger);color:#fff}
+.debt-status-badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.status-active{background:var(--danger2);color:var(--danger)}
+.status-paid{background:var(--accent3);color:var(--accent)}
+.status-overdue{background:#FEF3C7;color:#92400E}
+.debt-payment-log{margin-top:14px;border-top:1px solid var(--border);padding-top:12px}
+.debt-payment-log-title{font-size:12px;color:var(--text3);margin-bottom:8px;font-weight:500}
+.log-item{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border)}
+.log-item:last-child{border-bottom:none}
+
+/* ══════════════════════════════════════
+   ANALYTICS
+   ══════════════════════════════════════ */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.donut-wrap{display:flex;align-items:center;gap:24px}
+.donut-legend{display:flex;flex-direction:column;gap:10px;flex:1}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.legend-pct{margin-left:auto;font-weight:500;color:var(--text2)}
+.trend-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.trend-item:last-child{border-bottom:none}
+.trend-name{flex:1;font-size:14px;color:var(--text)}
+
+/* ══════════════════════════════════════
+   OTHERS — SPENDING LISTS
+   ══════════════════════════════════════ */
+.others-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.others-lists-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.spending-list-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:box-shadow var(--transition)}
+.spending-list-card:hover{box-shadow:0 4px 20px rgba(180,140,0,0.10)}
+.slc-header{padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.slc-header-left{display:flex;flex-direction:column;gap:3px;flex:1}
+.slc-name{font-size:16px;font-weight:600;color:var(--text)}
+.slc-cat{font-size:12px;color:var(--text3)}
+.slc-budget-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+.slc-budget-bar-bg{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.slc-budget-bar-fill{height:100%;border-radius:3px;transition:width 0.5s}
+.slc-budget-text{font-size:12px;font-weight:600;white-space:nowrap}
+.slc-amounts{font-size:12px;color:var(--text2);padding:10px 20px;background:var(--bg3);display:flex;gap:16px;border-bottom:1px solid var(--border)}
+.slc-amounts span{display:flex;align-items:center;gap:5px}
+.slc-items{padding:12px 20px;display:flex;flex-direction:column;gap:8px;min-height:60px;max-height:320px;overflow-y:auto}
+.slc-empty{text-align:center;padding:20px;color:var(--text3);font-size:13px}
+/* Spending list item row */
+.sli{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);transition:all var(--transition)}
+.sli.checked{background:var(--accent3);border-color:var(--accent2);opacity:0.75}
+.sli-check{width:20px;height:20px;border-radius:6px;border:2px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--transition);background:var(--bg2)}
+.sli.checked .sli-check{background:var(--accent);border-color:var(--accent);color:#1A1300}
+.sli-name{flex:1;font-size:14px;color:var(--text);transition:color var(--transition)}
+.sli.checked .sli-name{color:var(--text3);text-decoration:line-through}
+.sli-price-wrap{display:flex;align-items:center;gap:6px}
+.sli-price-prefix{font-size:13px;color:var(--text3);font-weight:500}
+.sli-price-input{width:90px;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);font-size:13px;font-weight:600;text-align:right;transition:border-color var(--transition)}
+.sli-price-input:focus{border-color:var(--accent)}
+.sli-price-input:disabled{
+  background:var(--bg3);color:var(--text3);
+  border-color:var(--border);cursor:not-allowed;opacity:0.7;
+}
+/* Real checkbox style */
+.sli-check{
+  width:18px;height:18px;flex-shrink:0;
+  accent-color:var(--accent);cursor:pointer;
+}
+.sli.checked .sli-name{color:var(--text3);text-decoration:line-through}
+.sli.checked{background:var(--accent3);border-color:var(--accent2);opacity:0.85}
+.sli.checked .sli-price-input{color:var(--text3)}
+.sli-del{width:24px;height:24px;border-radius:6px;background:transparent;border:none;color:var(--text3);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);flex-shrink:0}
+.sli-del:hover{background:var(--danger2);color:var(--danger)}
+.slc-add-item-row{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:8px}
+.slc-add-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-size:13px}
+.slc-add-input:focus{border-color:var(--accent)}
+.slc-add-btn{padding:9px 14px;background:var(--accent);color:#1A1300;border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:all var(--transition);flex-shrink:0}
+.slc-add-btn:hover{background:var(--accent2)}
+.slc-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.btn-clear-checked{padding:7px 14px;background:transparent;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:12px;color:var(--text2);transition:all var(--transition)}
+.btn-clear-checked:hover{border-color:var(--danger);color:var(--danger)}
+.btn-delete-list{padding:7px 14px;background:var(--danger2);border:none;border-radius:var(--radius-sm);font-size:12px;color:var(--danger);transition:all var(--transition)}
+.btn-delete-list:hover{background:var(--danger);color:#fff}
+.others-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text3)}
+.others-empty-icon{font-size:48px;margin-bottom:12px}
+.others-empty-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:6px}
+.others-empty-sub{font-size:14px;line-height:1.6}
+
+/* ══════════════════════════════════════
+   FEEDBACK
+   ══════════════════════════════════════ */
+.feedback-wrap{max-width:680px}
+.feedback-intro{background:var(--accent3);border-radius:var(--radius);padding:18px 22px;margin-bottom:24px;font-size:14px;color:var(--text);border:1px solid var(--border)}
+.feedback-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.feedback-section-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:18px}
+.rating-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.rating-label{font-size:14px;color:var(--text2)}
+.stars{display:flex;gap:4px}
+.star{font-size:24px;cursor:pointer;color:var(--border2);transition:all 0.15s;line-height:1}
+.star.lit{color:var(--warn)}
+.star:hover{transform:scale(1.2)}
+.check-group{display:flex;flex-direction:column;gap:10px}
+.check-item{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);transition:all var(--transition)}
+.check-item:hover{border-color:var(--accent)}
+.check-item.checked{border-color:var(--accent);background:var(--accent3)}
+.check-item input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px}
+.check-item label{font-size:14px;color:var(--text);cursor:pointer}
+.radio-group{display:flex;gap:10px;flex-wrap:wrap}
+.radio-opt{display:flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;font-size:13px;color:var(--text2);transition:all var(--transition)}
+.radio-opt input{display:none}
+.radio-opt.selected{border-color:var(--accent);background:var(--accent3);color:var(--accent)}
+.feedback-textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-size:14px;resize:vertical;min-height:90px;line-height:1.6;transition:border-color var(--transition)}
+.feedback-textarea:focus{border-color:var(--accent)}
+.slider-row{display:flex;align-items:center;gap:12px;margin-top:8px}
+input[type=range]{flex:1;accent-color:var(--accent);cursor:pointer}
+.slider-val{font-weight:600;min-width:28px;text-align:center;color:var(--accent)}
+.btn-submit{padding:13px 40px;background:var(--accent);color:#1A1300;border-radius:var(--radius-sm);font-size:15px;font-weight:600;transition:all var(--transition)}
+.btn-submit:hover{background:var(--accent2);transform:translateY(-1px)}
+.success-banner{background:var(--accent3);border:1px solid var(--accent2);border-radius:var(--radius);padding:16px 20px;font-size:14px;color:#7A5500;display:none;align-items:center;gap:10px;font-weight:500;margin-bottom:16px}
+.success-banner.show{display:flex}

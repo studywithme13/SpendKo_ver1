@@ -1,0 +1,272 @@
+/* =============================================
+   variables.css  —  GLASSMORPHISM + LIQUID UI
+   ============================================= */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Shared radii, fonts, timing ── */
+:root {
+  --radius:16px; --radius-sm:12px; --radius-lg:24px;
+  --font:'DM Sans', sans-serif; --font-serif:'DM Serif Display', serif;
+  --transition:0.25s cubic-bezier(0.4,0,0.2,1);
+
+  /* Glass tokens */
+  --glass-bg:       rgba(255,255,255,0.18);
+  --glass-bg-solid: rgba(255,255,255,0.72);
+  --glass-border:   rgba(255,255,255,0.38);
+  --glass-shadow:   0 8px 32px rgba(80,40,120,0.18);
+  --glass-blur:     blur(18px);
+  --glass-blur-sm:  blur(10px);
+
+  /* Liquid gradient — background mesh */
+  --mesh: radial-gradient(ellipse at 20% 20%, #fce4ff 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #c7f0ff 0%, transparent 50%),
+          radial-gradient(ellipse at 60% 80%, #ffe4f0 0%, transparent 55%),
+          radial-gradient(ellipse at 10% 80%, #e4fce4 0%, transparent 50%),
+          #f8f0ff;
+
+  /* Semantic tokens */
+  --bg:      #f0e8ff;
+  --bg2:     rgba(255,255,255,0.55);
+  --bg3:     rgba(255,255,255,0.28);
+  --bg4:     rgba(255,255,255,0.45);
+  --text:    #1a0e2e;
+  --text2:   #6b4fa0;
+  --text3:   #a889cc;
+  --accent:  #8b5cf6;
+  --accent2: #a78bfa;
+  --accent3: rgba(139,92,246,0.12);
+  --danger:  #e53e6a;
+  --danger2: rgba(229,62,106,0.12);
+  --warn:    #d97706;
+  --warn2:   rgba(217,119,6,0.12);
+  --border:  rgba(255,255,255,0.40);
+  --border2: rgba(139,92,246,0.35);
+  --card:    rgba(255,255,255,0.45);
+  --shadow:  0 4px 24px rgba(80,40,120,0.12);
+}
+
+/* ── Golden Light Glass ── */
+[data-theme="light"] {
+  --mesh: radial-gradient(ellipse at 15% 15%, #fff3cc 0%, transparent 55%),
+          radial-gradient(ellipse at 85% 10%, #ffe8a0 0%, transparent 50%),
+          radial-gradient(ellipse at 55% 85%, #fff8d6 0%, transparent 55%),
+          radial-gradient(ellipse at 10% 85%, #fffbe0 0%, transparent 50%),
+          #fffdf5;
+  --bg:#fffbec; --bg2:rgba(255,255,255,0.60); --bg3:rgba(255,248,200,0.35);
+  --bg4:rgba(255,240,160,0.45);
+  --text:#1a1300; --text2:#7a6a2a; --text3:#b8a050;
+  --accent:#c88c00; --accent2:#e6a800; --accent3:rgba(230,168,0,0.12);
+  --danger:#c0392b; --danger2:rgba(192,57,43,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(255,230,120,0.50); --border2:rgba(200,140,0,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(180,140,0,0.14);
+  --glass-border:rgba(255,230,120,0.55);
+}
+
+/* ── Cotton Candy Glass ── */
+[data-theme="cotton-candy"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #ffe0f5 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 15%, #f0d0ff 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #ffd6ee 0%, transparent 55%),
+          #fff0f8;
+  --bg:#fff0f8; --bg2:rgba(255,255,255,0.60); --bg3:rgba(255,220,240,0.35);
+  --text:#3a1030; --text2:#9b4f80; --text3:#c98ab0;
+  --accent:#e8609a; --accent2:#f07db0; --accent3:rgba(232,96,154,0.12);
+  --danger:#d63b3b; --danger2:rgba(214,59,59,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(255,180,220,0.50); --border2:rgba(232,96,154,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(232,96,154,0.14);
+  --glass-border:rgba(255,180,220,0.55);
+}
+
+/* ── Lavender Glass ── */
+[data-theme="lavender"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #ede0ff 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #d8ccff 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #f0e8ff 0%, transparent 55%),
+          #f8f4ff;
+  --bg:#f8f4ff; --bg2:rgba(255,255,255,0.60); --bg3:rgba(230,210,255,0.35);
+  --text:#2a1060; --text2:#7058b0; --text3:#a898d8;
+  --accent:#8b5cf6; --accent2:#a78bfa; --accent3:rgba(139,92,246,0.12);
+  --danger:#e05050; --danger2:rgba(224,80,80,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(200,170,255,0.50); --border2:rgba(139,92,246,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(139,92,246,0.14);
+  --glass-border:rgba(200,170,255,0.55);
+}
+
+/* ── Mint Glass ── */
+[data-theme="mint"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #d4f0e0 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #b8f0d0 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #e0f8ec 0%, transparent 55%),
+          #f2fbf6;
+  --bg:#f2fbf6; --bg2:rgba(255,255,255,0.60); --bg3:rgba(180,240,210,0.35);
+  --text:#0a2e1a; --text2:#2e8b57; --text3:#70b890;
+  --accent:#2e8b57; --accent2:#3bad6e; --accent3:rgba(46,139,87,0.12);
+  --danger:#d63b3b; --danger2:rgba(214,59,59,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(140,220,180,0.50); --border2:rgba(46,139,87,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(46,139,87,0.14);
+  --glass-border:rgba(140,220,180,0.55);
+}
+
+/* ── Peach Glass ── */
+[data-theme="peach"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #ffe8d0 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #ffd4b0 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #fff0e0 0%, transparent 55%),
+          #fff8f2;
+  --bg:#fff8f2; --bg2:rgba(255,255,255,0.60); --bg3:rgba(255,210,170,0.35);
+  --text:#3a1800; --text2:#a0522d; --text3:#d08a60;
+  --accent:#e8724a; --accent2:#f58b60; --accent3:rgba(232,114,74,0.12);
+  --danger:#c0392b; --danger2:rgba(192,57,43,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(255,190,150,0.50); --border2:rgba(232,114,74,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(232,114,74,0.14);
+  --glass-border:rgba(255,190,150,0.55);
+}
+
+/* ── Sky Glass ── */
+[data-theme="sky"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #d0e8ff 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #b0d8ff 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #e0f0ff 0%, transparent 55%),
+          #f0f8ff;
+  --bg:#f0f8ff; --bg2:rgba(255,255,255,0.60); --bg3:rgba(170,210,255,0.35);
+  --text:#0a1e38; --text2:#3a78b8; --text3:#7aaad8;
+  --accent:#3a8fe8; --accent2:#60aaff; --accent3:rgba(58,143,232,0.12);
+  --danger:#d63b3b; --danger2:rgba(214,59,59,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(150,200,255,0.50); --border2:rgba(58,143,232,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(58,143,232,0.14);
+  --glass-border:rgba(150,200,255,0.55);
+}
+
+/* ── Lemon Glass ── */
+[data-theme="lemon"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #fff8c0 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #fff0a0 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #fffce0 0%, transparent 55%),
+          #fffef0;
+  --bg:#fffef0; --bg2:rgba(255,255,255,0.60); --bg3:rgba(255,240,140,0.35);
+  --text:#2a2000; --text2:#8a7800; --text3:#c0aa30;
+  --accent:#c8a800; --accent2:#e0c000; --accent3:rgba(200,168,0,0.12);
+  --danger:#d63b3b; --danger2:rgba(214,59,59,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(230,210,100,0.50); --border2:rgba(200,168,0,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(200,168,0,0.14);
+  --glass-border:rgba(230,210,100,0.55);
+}
+
+/* ── Rose Glass ── */
+[data-theme="rose"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #ffd6de 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #ffc0cc 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #ffe8ed 0%, transparent 55%),
+          #fff5f7;
+  --bg:#fff5f7; --bg2:rgba(255,255,255,0.60); --bg3:rgba(255,190,200,0.35);
+  --text:#3a0a14; --text2:#a04060; --text3:#cc8090;
+  --accent:#c85070; --accent2:#e0608a; --accent3:rgba(200,80,112,0.12);
+  --danger:#b71c1c; --danger2:rgba(183,28,28,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(255,170,185,0.50); --border2:rgba(200,80,112,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(200,80,112,0.14);
+  --glass-border:rgba(255,170,185,0.55);
+}
+
+/* ── Blush Glass ── */
+[data-theme="blush"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #f8e8e0 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #f5d8cc 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #fdf0ec 0%, transparent 55%),
+          #fdf8f6;
+  --bg:#fdf8f6; --bg2:rgba(255,255,255,0.60); --bg3:rgba(240,200,185,0.35);
+  --text:#2c1810; --text2:#8c5840; --text3:#b89080;
+  --accent:#c87050; --accent2:#e08868; --accent3:rgba(200,112,80,0.12);
+  --danger:#c0392b; --danger2:rgba(192,57,43,0.12);
+  --warn:#c97b0a; --warn2:rgba(201,123,10,0.12);
+  --border:rgba(220,170,150,0.50); --border2:rgba(200,112,80,0.40);
+  --card:rgba(255,255,255,0.52); --shadow:0 4px 24px rgba(200,112,80,0.14);
+  --glass-border:rgba(220,170,150,0.55);
+}
+
+/* ── Charcoal Glass ── */
+[data-theme="charcoal"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #2a2a3a 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #1e1e2e 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #252535 0%, transparent 55%),
+          #1a1a2a;
+  --glass-bg:rgba(255,255,255,0.06); --glass-border:rgba(255,255,255,0.12);
+  --bg:#1a1a2a; --bg2:rgba(40,40,60,0.70); --bg3:rgba(255,255,255,0.06);
+  --bg4:rgba(255,255,255,0.10);
+  --text:#f0f0ff; --text2:#a0a0cc; --text3:#606080;
+  --accent:#818cf8; --accent2:#a5b4fc; --accent3:rgba(129,140,248,0.15);
+  --danger:#f87171; --danger2:rgba(248,113,113,0.15);
+  --warn:#fcd34d; --warn2:rgba(252,211,77,0.15);
+  --border:rgba(255,255,255,0.10); --border2:rgba(129,140,248,0.30);
+  --card:rgba(255,255,255,0.07); --shadow:0 8px 32px rgba(0,0,0,0.40);
+}
+
+/* ── Midnight Navy Glass ── */
+[data-theme="navy"] {
+  --mesh: radial-gradient(ellipse at 20% 20%, #0d1a3a 0%, transparent 55%),
+          radial-gradient(ellipse at 80% 10%, #0a1428 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 85%, #101e40 0%, transparent 55%),
+          #080e20;
+  --glass-bg:rgba(255,255,255,0.05); --glass-border:rgba(100,150,255,0.18);
+  --bg:#080e20; --bg2:rgba(20,35,70,0.70); --bg3:rgba(100,150,255,0.07);
+  --bg4:rgba(100,150,255,0.12);
+  --text:#e8eeff; --text2:#7b93c4; --text3:#3a4e70;
+  --accent:#6b9fff; --accent2:#8db8ff; --accent3:rgba(107,159,255,0.15);
+  --danger:#f87171; --danger2:rgba(248,113,113,0.15);
+  --warn:#fcd34d; --warn2:rgba(252,211,77,0.15);
+  --border:rgba(100,150,255,0.14); --border2:rgba(107,159,255,0.30);
+  --card:rgba(255,255,255,0.05); --shadow:0 8px 32px rgba(0,0,0,0.50);
+}
+
+body {
+  font-family: var(--font);
+  background: var(--mesh);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Floating animated blobs behind everything */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatBlob 12s ease-in-out infinite alternate;
+}
+body::before {
+  width: 520px; height: 520px;
+  background: var(--accent2);
+  top: -120px; left: -120px;
+  animation-duration: 14s;
+}
+body::after {
+  width: 400px; height: 400px;
+  background: var(--accent);
+  bottom: -100px; right: -80px;
+  animation-duration: 10s; animation-delay: -5s;
+  opacity: 0.30;
+}
+@keyframes floatBlob {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(40px,30px) scale(1.08); }
+  100% { transform: translate(-20px,50px) scale(0.96); }
+}
+
+button { font-family: var(--font); cursor: pointer; border: none; outline: none; }
+input, select, textarea { font-family: var(--font); outline: none; }
+::placeholder { color: var(--text3); }

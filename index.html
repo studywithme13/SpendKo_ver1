@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpendKo — Personal Budget Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css-glass/variables.css">
+<link rel="stylesheet" href="css-glass/auth.css">
+<link rel="stylesheet" href="css-glass/layout.css">
+<link rel="stylesheet" href="css-glass/panels.css">
+</head>
+<body>
+
+<!-- ============================================================ AUTH SCREEN ============================================================ -->
+<div id="auth-screen">
+  <div class="auth-left">
+    <div class="auth-ring" style="width:540px;height:540px;top:-160px;right:-180px;border-width:2.5px;border-color:rgba(255,255,255,0.18)"></div>
+    <div class="auth-ring" style="width:380px;height:380px;top:-80px;right:-80px;border-width:1.5px;border-color:rgba(120,80,0,0.30)"></div>
+    <div class="auth-ring" style="width:200px;height:200px;top:-60px;left:-60px;border-width:2px;border-color:rgba(255,255,255,0.22)"></div>
+    <div class="auth-ring" style="width:110px;height:110px;top:20px;left:20px;border-width:1.5px;border-color:rgba(100,60,0,0.25)"></div>
+    <div class="auth-ring" style="width:160px;height:160px;top:38%;right:-50px;border-width:2px;border-color:rgba(255,255,255,0.28)"></div>
+    <div class="auth-ring" style="width:80px;height:80px;top:42%;right:30px;border-width:1px;border-color:rgba(100,60,0,0.20)"></div>
+    <div class="auth-ring" style="width:300px;height:300px;bottom:-100px;left:-100px;border-width:2px;border-color:rgba(255,255,255,0.20)"></div>
+    <div class="auth-brand">SpendKo</div>
+    <div class="auth-tagline">Your all-in-one personal finance tracker — budget, save, and manage debt the smart way.</div>
+    <div class="auth-feat">
+      <div class="auth-feat-item"><div class="auth-feat-dot"></div>Track income &amp; expenses</div>
+      <div class="auth-feat-item"><div class="auth-feat-dot"></div>Set budgets per category</div>
+      <div class="auth-feat-item"><div class="auth-feat-dot"></div>Manage loans &amp; debts</div>
+      <div class="auth-feat-item"><div class="auth-feat-dot"></div>Reach your savings goals</div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchAuth('login')">Sign in</button>
+        <button class="auth-tab"        onclick="switchAuth('signup')">Sign up</button>
+      </div>
+      <div class="auth-form active" id="login-form">
+        <div class="auth-title">Welcome back</div>
+        <div class="auth-sub">Sign in to your SpendKo account.</div>
+        <div class="form-group"><label class="form-label">Email address</label><input class="form-input" type="email" id="login-email" placeholder="you@example.com"></div>
+        <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="login-pw" placeholder="••••••••"></div>
+        <div class="form-check"><input type="checkbox" id="remember"><label for="remember">Remember me</label></div>
+        <button class="btn-primary" onclick="handleLogin()">Sign in →</button>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:#7A6A2A">
+          Don't have an account?
+          <a href="#" onclick="switchAuth('signup');return false;"
+             style="color:#C88C00;font-weight:600;text-decoration:underline">Sign up</a>
+        </p>
+      </div>
+      <div class="auth-form" id="signup-form">
+        <div class="auth-title">Create account</div>
+        <div class="auth-sub">Start managing your finances today.</div>
+        <div class="form-group"><label class="form-label">Full name</label><input class="form-input" type="text" id="signup-name" placeholder="Juan dela Cruz"></div>
+        <div class="form-group"><label class="form-label">Email address</label><input class="form-input" type="email" id="signup-email" placeholder="you@example.com"></div>
+        <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="signup-pw" placeholder="At least 8 characters"></div>
+        <div class="form-check"><input type="checkbox" id="terms"><label for="terms">I agree to the Terms of Service</label></div>
+        <button class="btn-primary" onclick="handleSignup()">Create account →</button>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:#7A6A2A">
+          Already have an account?
+          <a href="#" onclick="switchAuth('login');return false;"
+             style="color:#C88C00;font-weight:600;text-decoration:underline">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ APP SHELL ============================================================ -->
+<div id="app">
+  <div class="sidebar">
+    <div class="sidebar-brand">SpendKo</div>
+    <nav class="sidebar-nav">
+      <button class="tab-btn active" onclick="switchTab('dashboard',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard
+      </button>
+      <button class="tab-btn" onclick="switchTab('transactions',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M8 3v18M8 3l-4 4M8 3l4 4M16 21V3M16 21l-4-4M16 21l4-4"/></svg></span>Transactions
+      </button>
+      <button class="tab-btn" onclick="switchTab('budget',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg></span>Budget
+      </button>
+      <button class="tab-btn" onclick="switchTab('savings',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 6v6l3 3"/></svg></span>Savings
+      </button>
+      <button class="tab-btn" onclick="switchTab('debt',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></span>Debt Manager
+      </button>
+      <button class="tab-btn" onclick="switchTab('others',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span>Notes &amp; Lists
+      </button>
+      <button class="tab-btn" onclick="switchTab('analytics',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Analytics
+      </button>
+      <button class="tab-btn" onclick="switchTab('feedback',this)">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Feedback
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar" id="user-avatar">JD</div>
+        <div class="username-pill" id="user-name-pill">Juan</div>
+      </div>
+      <div class="sidebar-actions">
+        <button class="icon-btn" onclick="openThemeModal()" title="Choose theme">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Theme
+        </button>
+        <button class="icon-btn" onclick="doLogout()" title="Sign out">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign out
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-main">
+
+    <div class="app-content">
+
+      <!-- ================================================ DASHBOARD ================================================ -->
+      <div class="tab-panel active" id="panel-dashboard">
+        <div class="page-header">
+          <div class="page-title" id="dash-greeting">Good morning 👋</div>
+          <div class="page-sub">Your financial snapshot</div>
+        </div>
+
+        <!-- Summary cards — each clickable -->
+        <div class="summary-grid">
+          <div class="summary-card sc-income" onclick="openCardModal('income')" style="cursor:pointer">
+            <div class="sc-label">💜 Total income</div>
+            <div class="sc-amount" id="dash-income">₱0</div>
+            <div class="sc-sub" id="dash-income-annual">Annual: ₱0</div>
+          </div>
+          <div class="summary-card sc-expense" onclick="openCardModal('expense')" style="cursor:pointer">
+            <div class="sc-label">💸 Total expenses</div>
+            <div class="sc-amount" id="dash-expense">₱0</div>
+            <div class="sc-sub" id="dash-expense-daily"></div>
+            <div class="sc-sub" id="dash-expense-annual"></div>
+          </div>
+          <div class="summary-card" onclick="openCardModal('balance')" style="cursor:pointer">
+            <div class="sc-label">📈 Net balance</div>
+            <div class="sc-amount" id="dash-balance">₱0</div>
+            <div class="sc-sub" id="dash-balance-annual"></div>
+          </div>
+          <div class="summary-card" onclick="switchTab('debt',document.querySelectorAll('.tab-btn')[4])" style="cursor:pointer">
+            <div class="sc-label">🏦 Total debt</div>
+            <div class="sc-amount" id="dash-debt" style="color:var(--danger)">₱0</div>
+            <div class="sc-sub">Outstanding balance</div>
+          </div>
+        </div>
+
+        <!-- Unallocated banner -->
+        <div id="dash-unallocated" style="padding:12px 18px;border-radius:var(--radius-sm);border:1px solid var(--border);
+          background:var(--bg3);font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.7"></div>
+
+        <div class="dash-grid">
+          <div class="card">
+            <div class="card-title"><div class="card-title-left">📊 Monthly overview</div><div style="font-size:12px;color:var(--text3)">Income vs Expenses</div></div>
+            <div class="chart-bars" id="dash-chart"></div>
+            <div style="display:flex;gap:16px;margin-top:12px">
+              <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent2)"></div>Income</div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)"><div style="width:10px;height:10px;border-radius:2px;background:var(--danger)"></div>Expenses</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-title-left">🎯 Budget status</div></div>
+            <div class="budget-list" id="dash-budgets"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:20px">
+          <div class="card-title">
+            <div class="card-title-left">🕐 Recent transactions</div>
+            <button onclick="switchTab('transactions',document.querySelectorAll('.tab-btn')[1])"
+              style="font-size:13px;color:var(--accent);background:none;border:none;cursor:pointer;font-weight:500">View all →</button>
+          </div>
+          <div class="txn-list" id="recent-txns"></div>
+        </div>
+      </div>
+
+      <!-- ================================================ TRANSACTIONS ================================================ -->
+      <div class="tab-panel" id="panel-transactions">
+        <div class="page-header"><div class="page-title">Transactions</div><div class="page-sub">All your income and expense records</div></div>
+        <div class="toolbar">
+          <div class="search-wrap">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" type="text" id="search-box" placeholder="Search transactions…" oninput="renderTransactions()">
+          </div>
+          <!-- Date range -->
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <label style="font-size:12px;color:var(--text2);white-space:nowrap">From</label>
+            <input type="date" id="filter-date-from" class="filter-select" style="width:130px" onchange="renderTransactions()">
+            <label style="font-size:12px;color:var(--text2)">To</label>
+            <input type="date" id="filter-date-to"   class="filter-select" style="width:130px" onchange="renderTransactions()">
+          </div>
+          <select class="filter-select" id="filter-type" onchange="renderTransactions()">
+            <option value="all">All types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+          <select class="filter-select" id="filter-cat" onchange="renderTransactions()"><option value="all">All categories</option></select>
+          <button class="btn-add" onclick="openModal()">＋ Add transaction</button>
+        </div>
+        <div class="table-wrap">
+          <table><thead><tr>
+            <th id="th-desc"   style="cursor:pointer" onclick="sortBy('desc')">Description ⇅</th>
+            <th id="th-cat"    style="cursor:pointer" onclick="sortBy('cat')">Category ⇅</th>
+            <th id="th-type"   style="cursor:pointer" onclick="sortBy('type')">Type ⇅</th>
+            <th id="th-date"   style="cursor:pointer" onclick="sortBy('date')">Date ↓</th>
+            <th id="th-amount" style="cursor:pointer" onclick="sortBy('amount')">Amount ⇅</th>
+            <th></th>
+          </tr></thead>
+          <tbody id="txn-table-body"></tbody></table>
+        </div>
+      </div>
+
+      <!-- ================================================ BUDGET ================================================ -->
+      <div class="tab-panel" id="panel-budget">
+        <div class="page-header"><div class="page-title">Budget planner</div><div class="page-sub">Set monthly spending limits per category</div></div>
+        <div id="budget-unallocated" style="display:none;padding:12px 18px;border-radius:var(--radius-sm);
+          border:1px solid;font-size:13px;margin-bottom:20px;line-height:1.7"></div>
+        <div class="budget-setup-grid" id="budget-cards"></div>
+      </div>
+
+      <!-- ================================================ SAVINGS ================================================ -->
+      <div class="tab-panel" id="panel-savings">
+        <div class="page-header"><div class="page-title">Savings goals</div><div class="page-sub">Work towards your financial milestones</div></div>
+        <div id="savings-unallocated" style="display:none;padding:12px 18px;border-radius:var(--radius-sm);
+          border:1px solid;font-size:13px;margin-bottom:20px;line-height:1.7"></div>
+        <div class="goals-grid" id="goals-grid"></div>
+      </div>
+
+      <!-- ================================================ DEBT ================================================ -->
+      <div class="tab-panel" id="panel-debt">
+        <div class="page-header"><div class="page-title">Debt Manager</div><div class="page-sub">Track loans, credit cards, and what you owe</div></div>
+
+        <!-- Due reminders banner -->
+        <div id="debt-reminders" style="display:none;background:var(--warn2);border:1px solid var(--warn);
+          border-radius:var(--radius-sm);padding:12px 18px;margin-bottom:20px;font-size:13px"></div>
+
+        <div class="debt-summary-grid">
+          <div class="debt-sum-card summary-card sc-expense"><div class="sc-label">🔴 Total owed</div><div class="sc-amount" id="debt-total-owed">₱0</div><div class="sc-sub">Across all debts</div></div>
+          <div class="debt-sum-card summary-card"><div class="sc-label">💜 Total paid</div><div class="sc-amount" id="debt-total-paid" style="color:var(--accent)">₱0</div><div class="sc-sub">All time</div></div>
+          <div class="debt-sum-card summary-card"><div class="sc-label">📋 Active debts</div><div class="sc-amount" id="debt-active-count">0</div><div class="sc-sub">Pending accounts</div></div>
+          <div class="debt-sum-card summary-card"><div class="sc-label">✅ Paid off</div><div class="sc-amount" id="debt-paid-count" style="color:var(--accent)">0</div><div class="sc-sub">Completed debts</div></div>
+        </div>
+        <div style="margin-bottom:16px"><button class="btn-add" onclick="openDebtModal()">＋ Add debt / loan</button></div>
+        <div class="debt-cards" id="debt-cards-container"></div>
+      </div>
+
+      <!-- ================================================ ANALYTICS ================================================ -->
+      <div class="tab-panel" id="panel-analytics">
+        <div class="page-header"><div class="page-title">Analytics</div><div class="page-sub">Understand your spending patterns</div></div>
+        <div class="analytics-grid">
+          <div class="card">
+            <div class="card-title"><div class="card-title-left">🍩 Spending by category</div></div>
+            <div class="donut-wrap">
+              <canvas id="donut-canvas" width="130" height="130"></canvas>
+              <div class="donut-legend" id="donut-legend"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-title-left">📈 Monthly trend</div></div>
+            <div id="trend-list"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-title"><div class="card-title-left">💡 Financial insights</div></div>
+          <div id="insights-list" style="display:flex;flex-direction:column;gap:10px"></div>
+        </div>
+      </div>
+
+      <!-- ================================================ FEEDBACK ================================================ -->
+      <div class="tab-panel" id="panel-feedback">
+        <div class="page-header"><div class="page-title">Share your feedback</div><div class="page-sub">Help us improve SpendKo</div></div>
+        <div class="feedback-wrap">
+          <div class="success-banner" id="feedback-success">✅ Thank you! Your feedback has been submitted.</div>
+          <div class="feedback-intro">📋 This feedback form is part of an <strong>HCI/UX research project</strong>. Please answer honestly.</div>
+          <div class="feedback-section">
+            <div class="feedback-section-title">⭐ Overall satisfaction</div>
+            <div class="rating-row"><div class="rating-label">How satisfied are you with SpendKo overall?</div><div class="stars" id="stars-overall"><span class="star" onclick="rate('overall',1)">★</span><span class="star" onclick="rate('overall',2)">★</span><span class="star" onclick="rate('overall',3)">★</span><span class="star" onclick="rate('overall',4)">★</span><span class="star" onclick="rate('overall',5)">★</span></div></div>
+            <div class="rating-row"><div class="rating-label">How easy is the app to navigate?</div><div class="stars" id="stars-ease"><span class="star" onclick="rate('ease',1)">★</span><span class="star" onclick="rate('ease',2)">★</span><span class="star" onclick="rate('ease',3)">★</span><span class="star" onclick="rate('ease',4)">★</span><span class="star" onclick="rate('ease',5)">★</span></div></div>
+            <div class="rating-row"><div class="rating-label">How visually appealing is the design?</div><div class="stars" id="stars-design"><span class="star" onclick="rate('design',1)">★</span><span class="star" onclick="rate('design',2)">★</span><span class="star" onclick="rate('design',3)">★</span><span class="star" onclick="rate('design',4)">★</span><span class="star" onclick="rate('design',5)">★</span></div></div>
+          </div>
+          <div class="feedback-section">
+            <div class="feedback-section-title">🔧 Features you used</div>
+            <div class="check-group" id="feature-checks">
+              <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" value="dashboard">Dashboard overview</label>
+              <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" value="transactions">Transaction tracking</label>
+              <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" value="budget">Budget planner</label>
+              <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" value="savings">Savings goals</label>
+              <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" value="debt">Debt manager</label>
+              <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" value="analytics">Analytics &amp; charts</label>
+              <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" value="theme">Theme customization</label>
+            </div>
+          </div>
+          <div class="feedback-section">
+            <div class="feedback-section-title">🎛 Usability rating</div>
+            <div style="margin-bottom:18px"><div style="font-size:14px;color:var(--text2);margin-bottom:8px">How intuitive was the interface? (1–10)</div>
+            <div class="slider-row"><span style="font-size:12px;color:var(--text3)">1</span><input type="range" min="1" max="10" value="7" id="usability-slider" oninput="document.getElementById('usability-val').textContent=this.value"><span style="font-size:12px;color:var(--text3)">10</span><div class="slider-val" id="usability-val">7</div></div></div>
+            <div><div style="font-size:14px;color:var(--text2);margin-bottom:8px">How likely are you to recommend SpendKo? (NPS 1–10)</div>
+            <div class="slider-row"><span style="font-size:12px;color:var(--text3)">1</span><input type="range" min="1" max="10" value="8" id="nps-slider" oninput="document.getElementById('nps-val').textContent=this.value"><span style="font-size:12px;color:var(--text3)">10</span><div class="slider-val" id="nps-val">8</div></div></div>
+          </div>
+          <div class="feedback-section">
+            <div class="feedback-section-title">👤 About you</div>
+            <div style="margin-bottom:16px"><div style="font-size:14px;color:var(--text2);margin-bottom:10px">How would you describe yourself?</div>
+            <div class="radio-group" id="user-type-group">
+              <label class="radio-opt" onclick="selectRadio('usertype',this)"><input type="radio" name="usertype">🎓 Student</label>
+              <label class="radio-opt" onclick="selectRadio('usertype',this)"><input type="radio" name="usertype">💼 Professional</label>
+              <label class="radio-opt" onclick="selectRadio('usertype',this)"><input type="radio" name="usertype">🖥 Freelancer</label>
+              <label class="radio-opt" onclick="selectRadio('usertype',this)"><input type="radio" name="usertype">✨ Other</label>
+            </div></div>
+            <div><div style="font-size:14px;color:var(--text2);margin-bottom:10px">How often do you track your finances?</div>
+            <div class="radio-group" id="freq-group">
+              <label class="radio-opt" onclick="selectRadio('freq',this)"><input type="radio" name="freq">Daily</label>
+              <label class="radio-opt" onclick="selectRadio('freq',this)"><input type="radio" name="freq">Weekly</label>
+              <label class="radio-opt" onclick="selectRadio('freq',this)"><input type="radio" name="freq">Monthly</label>
+              <label class="radio-opt" onclick="selectRadio('freq',this)"><input type="radio" name="freq">Rarely</label>
+            </div></div>
+          </div>
+          <div class="feedback-section">
+            <div class="feedback-section-title">💬 Open feedback</div>
+            <div style="margin-bottom:14px"><div class="form-label" style="margin-bottom:8px">What did you like most about SpendKo?</div><textarea class="feedback-textarea" id="fb-liked" placeholder="e.g. The clean design, the debt tracker…"></textarea></div>
+            <div style="margin-bottom:14px"><div class="form-label" style="margin-bottom:8px">What could be improved?</div><textarea class="feedback-textarea" id="fb-improve" placeholder="e.g. I wish there was a recurring transaction feature…"></textarea></div>
+            <div><div class="form-label" style="margin-bottom:8px">Any other comments?</div><textarea class="feedback-textarea" id="fb-other" placeholder="Anything else you'd like to share…"></textarea></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <button class="btn-submit" onclick="submitFeedback()">Submit feedback →</button>
+            <div style="font-size:13px;color:var(--text3)">Responses are anonymous and for research only.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================ OTHERS (Notes & Lists) ================================================ -->
+      <div class="tab-panel" id="panel-others">
+        <div class="page-header"><div class="page-title">Notes &amp; Lists</div>
+          <div class="page-sub">Checklists for groceries, errands, to-dos — Notepads for ideas, reminders, and memory dumps</div></div>
+        <div style="margin-bottom:20px">
+          <button class="btn-add" onclick="openNewNoteModal()">＋ New checklist / notepad</button>
+        </div>
+        <div class="others-lists-grid" id="others-lists-container"></div>
+      </div>
+
+    </div><!-- app-content -->
+  </div><!-- app-main -->
+</div><!-- app -->
+
+<!-- ============================================================ MODALS ============================================================ -->
+
+<!-- Add Transaction -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title">Add transaction</div>
+    <div class="type-toggle">
+      <button class="type-opt sel-income"  id="type-income"  onclick="setType('income')">＋ Income</button>
+      <button class="type-opt"             id="type-expense" onclick="setType('expense')">－ Expense</button>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label><input class="form-input" type="text" id="txn-desc" placeholder="e.g. Freelance project"></div>
+    <div class="modal-row">
+      <div class="form-group"><label class="form-label">Amount (₱)</label><input class="form-input" type="number" id="txn-amount" placeholder="0.00" min="0"></div>
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="txn-date"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Category</label>
+      <!-- Income categories shown when Income is selected, expense when Expense -->
+      <select class="form-input" id="txn-cat" onchange="updateBudgetHint()">
+        <option value="Salary">💼 Salary</option>
+        <option value="Freelance">💻 Freelance</option>
+        <option value="Other">📌 Other Income</option>
+      </select>
+      <!-- Live budget hint — shown only for expenses -->
+      <div id="txn-budget-hint" style="display:none;margin-top:8px;padding:9px 12px;border-radius:var(--radius-sm);border:1px solid;font-size:13px;line-height:1.5"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save"   onclick="saveTransaction()">Save transaction</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Debt -->
+<div class="modal-overlay" id="debt-modal">
+  <div class="modal">
+    <div class="modal-title">Add debt / loan</div>
+    <div class="form-group"><label class="form-label">Debt name / creditor</label><input class="form-input" type="text" id="debt-name" placeholder="e.g. BDO Personal Loan"></div>
+    <div class="form-group"><label class="form-label">Debt type</label>
+      <select class="form-input" id="debt-type">
+        <option value="Personal Loan">💳 Personal Loan</option>
+        <option value="Credit Card">💳 Credit Card</option>
+        <option value="SSS / Pag-IBIG Loan">🏛 SSS / Pag-IBIG Loan</option>
+        <option value="Home Loan">🏠 Home Loan</option>
+        <option value="Car Loan">🚗 Car Loan</option>
+        <option value="Student Loan">🎓 Student Loan</option>
+        <option value="Business Loan">💼 Business Loan</option>
+        <option value="Informal / Utang">🤝 Informal / Utang</option>
+      </select>
+    </div>
+    <div class="modal-row">
+      <div class="form-group"><label class="form-label">Total amount (₱)</label><input class="form-input" type="number" id="debt-total" placeholder="50000" min="0"></div>
+      <div class="form-group"><label class="form-label">Already paid (₱)</label><input class="form-input" type="number" id="debt-paid-init" placeholder="0" min="0" value="0"></div>
+    </div>
+    <div class="modal-row">
+      <div class="form-group"><label class="form-label">Interest rate (% p.a.)</label><input class="form-input" type="number" id="debt-interest" placeholder="0" min="0" step="0.1" value="0"></div>
+      <div class="form-group"><label class="form-label">Monthly payment (₱)</label><input class="form-input" type="number" id="debt-monthly" placeholder="0" min="0" value="0"></div>
+    </div>
+    <div class="modal-row">
+      <div class="form-group"><label class="form-label">Start date</label><input class="form-input" type="date" id="debt-start"></div>
+      <div class="form-group"><label class="form-label">End date (expected)</label><input class="form-input" type="date" id="debt-end"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Due day of month <span style="font-weight:400;color:var(--text3)">(last day to pay before interest)</span></label>
+      <input class="form-input" type="number" id="debt-due-day" placeholder="e.g. 15" min="1" max="31" value="0">
+    </div>
+    <div class="form-group"><label class="form-label">Notes (optional)</label><input class="form-input" type="text" id="debt-notes" placeholder="e.g. Pay before the 15th"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDebtModal()">Cancel</button>
+      <button class="btn-save"   onclick="saveDebt()">Add debt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Savings Goal -->
+<div class="modal-overlay" id="goal-modal">
+  <div class="modal">
+    <div class="modal-title">Add savings goal</div>
+    <div class="form-group"><label class="form-label">Goal name</label><input class="form-input" type="text" id="goal-name" placeholder="e.g. Emergency fund"></div>
+    <div class="modal-row">
+      <div class="form-group"><label class="form-label">Target (₱)</label><input class="form-input" type="number" id="goal-target" placeholder="50000"></div>
+      <div class="form-group"><label class="form-label">Saved so far (₱)</label><input class="form-input" type="number" id="goal-saved" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Category / Icon</label>
+      <select class="form-input" id="goal-emoji">
+        <option value="🏠">🏠 Home</option><option value="🚗">🚗 Car</option><option value="✈️">✈️ Travel</option>
+        <option value="📱">📱 Gadget</option><option value="🎓">🎓 Education</option><option value="💊">💊 Emergency</option>
+        <option value="🎁">🎁 Gift</option><option value="💰">💰 General Savings</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeGoalModal()">Cancel</button>
+      <button class="btn-save"   onclick="saveGoal()">Add goal</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Note / Checklist -->
+<div class="modal-overlay" id="new-note-modal">
+  <div class="modal">
+    <div class="modal-title">New checklist or notepad</div>
+    <div class="form-group"><label class="form-label">Title</label><input class="form-input" type="text" id="nn-title" placeholder="e.g. Grocery list, Ideas, Weekly to-do…"></div>
+    <div class="form-group"><label class="form-label">Type</label>
+      <select class="form-input" id="nn-type">
+        <option value="checklist">✅ Checklist — tickable items (grocery, to-do, errands)</option>
+        <option value="notepad">📝 Notepad — free text (ideas, notes, memory dump)</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeNewNoteModal()">Cancel</button>
+      <button class="btn-save"   onclick="saveNewNote()">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard card analytics modal -->
+<div class="modal-overlay" id="card-modal">
+  <div class="modal" style="width:560px;max-width:96vw;max-height:90vh;overflow-y:auto">
+    <div class="modal-title" id="card-modal-title"></div>
+    <div id="card-modal-body" style="margin-bottom:20px"></div>
+    <div class="modal-actions">
+      <button class="btn-save" onclick="closeCardModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Picker Modal -->
+<div class="modal-overlay" id="theme-modal">
+  <div class="modal" style="width:720px;max-width:96vw">
+    <div class="modal-title">🎨 Choose your theme</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:20px;margin-top:-10px">Changes apply instantly — try them out!</p>
+    <div id="modal-theme-cards" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:flex-start;max-height:58vh;overflow-y:auto;padding-right:4px"></div>
+    <div class="modal-actions"><button class="btn-save" onclick="closeThemeModal()">Done</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ============ JS ============ -->
+<script src="js/state.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/transactions.js"></script>
+<script src="js/budget.js"></script>
+<script src="js/savings.js"></script>
+<script src="js/debt.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/feedback.js"></script>
+<script src="js/others.js"></script>
+<script>
+  ['modal','debt-modal','goal-modal','new-note-modal','card-modal','theme-modal'].forEach(id => {
+    document.getElementById(id).addEventListener('click', e => {
+      if (e.target === e.currentTarget) document.getElementById(id).classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
